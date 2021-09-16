@@ -1,0 +1,43 @@
+name: Build and Publish crossmac
+
+on:
+  push:
+    tags:
+      - v*
+
+jobs:
+  build:
+    if: ${{ github.owner }} == "varbhat"
+    runs-on: ubuntu-latest
+
+    container:
+      image: "ghcr.io/varbhat/void-container:glibc"
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+    steps:
+      - name: Prepare container
+        run: |
+          xbps-install -Syu || xbps-install -yu xbps
+          xbps-install -yu
+      - name: Install Packages
+        run: xbps-install -Sy git wget make bash curl clang python3 cmake libxml2 patch libxml2-devel liblzma liblzma-devel openssl-devel xz zstd github-cli
+      - name: Setup and Build osxcross
+        run: |
+          git clone https://github.com/varbhat/crossmac .
+          git clone https://github.com/tpoechtrager/osxcross
+          cd osxcross/tarballs
+          wget https://github.com/phracker/MacOSX-SDKs/releases/download/11.3/MacOSX11.3.sdk.tar.xz
+          cd ..
+          UNATTENDED=1 ./build.sh
+          mv target ../crossmac
+          cd ..
+          rm -rf osxcross
+      - name: Archive and Compress the Build
+        run: |
+          tar cvf crossmac.tar crossmac
+          zstd -19 crossmac.tar
+      - name: Publish Releases
+        run: |
+          gh config set prompt disabled
+          gh release create $(git tag -l | tail -n1) -t $(git tag -l | tail -n1) -p crossmac.tar.zst
