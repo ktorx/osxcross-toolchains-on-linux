@@ -9,7 +9,7 @@
 
 ## Introduction
 `crossmac` is Pre-Built [osxcross](https://github.com/tpoechtrager/osxcross) (MacOS cross compiler) with SDK taken from [phracker/MacOSX-SDKs](https://github.com/phracker/MacOSX-SDKs). [Github Actions](https://github.com/features/actions) is used to build `crossmac`.
-It is heavily compressed(from `~560MB to ~56MB`) using `zstd` . It is ideal to use for CI/CD or if you don't want to compile osxcross. It's built on Void Linux and works properly on not-old Linux glibc Distributions.
+It is heavily compressed(from `~550MB to ~50MB`) using `zstd` . It is ideal to use for CI/CD or if you don't want to compile osxcross. It's built on Void Linux and works properly on not-old Linux glibc Distributions.
 
 ## Usage
 * Download crossmac and extract it.
