@@ -3,7 +3,7 @@ name: Build and Publish osxcross-toolchains
 on:
   push:
     tags:
-      - v*
+      - v*-r*
 
 jobs:
   build:
