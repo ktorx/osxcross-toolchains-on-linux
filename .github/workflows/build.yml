@@ -41,4 +41,4 @@ jobs:
         run: |
           gh config set prompt disabled
           gh release create $(git tag -l | tail -n1) -t $(git tag -l | tail -n1) -p 
-osxcross-toolchains_$(git tag -l | tail -n1).tar.zst
+osxcross-toolchains-$(git tag -l | tail -n1).tar.zst
