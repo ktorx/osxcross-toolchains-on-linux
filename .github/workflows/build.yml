@@ -40,5 +40,5 @@ jobs:
       - name: Publish Releases
         run: |
           gh config set prompt disabled
-          gh release create $(git tag -l | tail -n1) -t $(git tag -l | tail -n1) -p 
+          gh release edit $(git tag -l | tail -n1) -t $(git tag -l | tail -n1) -p 
 osxcross-toolchains-$(git tag -l | tail -n1).tar.zst
